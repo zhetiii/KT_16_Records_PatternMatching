@@ -7,17 +7,14 @@ namespace KT_16_Records_PatternMatching
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             Console.WriteLine("==================================================");
             Console.WriteLine("  КТ №16: Записи и паттерн-матчинг (Вариант 1)   ");
             Console.WriteLine("==================================================\n");
 
-            // 1. Автоматическая проверка по контрольным ключам преподавателя
             Console.WriteLine("=== 1. Проверка проверочных ключей ===");
             RunTeacherTests();
 
-            // 2. Интерактивный ручной ввод с обработкой ошибок
             Console.WriteLine("\n=== 2. Ручной ввод фигуры с клавиатуры ===");
             while (true)
             {
@@ -37,28 +34,18 @@ namespace KT_16_Records_PatternMatching
             Console.WriteLine("\nПрограмма завершена.");
         }
 
-        /// <summary>
-        /// Классификатор фигур через switch-выражение.
-        /// Порядок веток строго от специфичных к общим.
-        /// </summary>
         public static string Classify(object shape) => shape switch
         {
-            // 1. Вложенный свойственный паттерн (окружность в центре (0,0))
             Circle { Center: { X: 0, Y: 0 } } => "окружность в начале координат",
 
-            // 2. Свойственный паттерн (радиус равен 0)
             Circle { Radius: 0 } => "вырожденная окружность (точка)",
 
-            // 3. Общий паттерн для окружности
             Circle c => $"строка с радиусом {c.Radius}",
 
-            // 4. Тип-паттерн + when (верхняя левая точка совпадает с нижней правой)
             Rectangle r when r.TopLeft == r.BottomRight => "вырожденный прямоугольник (точка)",
 
-            // 5. Общий паттерн для прямоугольника
             Rectangle r => $"строка с размерами {Math.Abs(r.BottomRight.X - r.TopLeft.X)}x{Math.Abs(r.BottomRight.Y - r.TopLeft.Y)}",
 
-            // 6. Заменяющий паттерн (fallback)
             _ => "неизвестная фигура"
         };
 
